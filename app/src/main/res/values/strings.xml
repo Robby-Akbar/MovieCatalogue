@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Movie Catalogue</string>
+    <string name="title_movie">Movies</string>
+    <string name="title_tv_show">Tv Shows</string>
+    <string name="title_favorite">Favorite List</string>
+
+    <string name="expandedImageContentDescription">Backdrop Image</string>
+    <string name="detail_movie">Detail Movie</string>
+    <string name="text_share">Share this app now.</string>
+    <string name="share_text">See %s details in the Movie Catalogue application.</string>
+
+    <string name="splash_description">Splash Screen</string>
+    <string name="txt_favored">Favored</string>
+    <string name="no_favorites">No Favorites</string>
+    <string name="txt_connection">No Internet Connection</string>
+    <string name="no_connection">Upsss! Something went Wrong…</string>
+
+    <string name="msg_first">Already at the beginning</string>
+    <string name="msg_last">Already at the end</string>
+    <string name="message_undo">Cancel deleted the previous item?</string>
+    <string name="message_ok">OK</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Type a Title</string>
+    <string name="data_not_found">Item not Found!</string>
+    <string name="change_settings">App Settings</string>
+</resources>
