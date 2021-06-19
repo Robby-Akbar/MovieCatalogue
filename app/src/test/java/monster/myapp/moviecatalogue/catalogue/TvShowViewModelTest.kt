@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer
 import androidx.paging.PagingData
 import monster.myapp.moviecatalogue.core.data.CatalogueRepository
 import monster.myapp.moviecatalogue.core.data.source.local.entity.TvShowEntity
-import monster.myapp.moviecatalogue.catalogue.tv.TvShowViewModel
 import monster.myapp.moviecatalogue.core.utils.DataDummy
 import monster.myapp.moviecatalogue.core.data.Resource
 import org.junit.Assert.*
@@ -25,7 +24,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class TvShowViewModelTest {
 
-    private lateinit var viewModel: TvShowViewModel
+    //private lateinit var viewModel: TvShowViewModel
     private val query = "SELECT * FROM tv_entities"
 
     @get:Rule

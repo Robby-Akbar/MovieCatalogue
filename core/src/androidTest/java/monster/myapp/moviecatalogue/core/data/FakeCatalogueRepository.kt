@@ -9,6 +9,8 @@ import monster.myapp.moviecatalogue.core.data.source.remote.network.ApiResponse
 import monster.myapp.moviecatalogue.core.data.source.remote.RemoteDataSource
 import monster.myapp.moviecatalogue.core.data.source.remote.response.ListMovieResponse
 import monster.myapp.moviecatalogue.core.data.source.remote.response.ListTvShowResponse
+import monster.myapp.moviecatalogue.core.data.source.remote.response.MovieResponse
+import monster.myapp.moviecatalogue.core.data.source.remote.response.TvShowResponse
 import monster.myapp.moviecatalogue.core.domain.model.Catalogue
 import monster.myapp.moviecatalogue.core.domain.repository.ICatalogueRepository
 import monster.myapp.moviecatalogue.core.utils.AppExecutors
@@ -29,14 +31,12 @@ class FakeCatalogueRepository(
         pageSize = 5
     )
 
-    override fun getAllMovies(
-        isRefresh: Boolean, query: String
-    ): Flow<Resource<PagingData<Catalogue>>> {
-        return object : monster.myapp.moviecatalogue.core.data.NetworkBoundResource<PagingData<Catalogue>, ListMovieResponse>() {
+    override fun getAllMovies(isRefresh: Boolean): Flow<Resource<PagingData<Catalogue>>> {
+        return object : NetworkBoundResource<PagingData<Catalogue>, ListMovieResponse>() {
             public override fun loadFromDB(): Flow<PagingData<Catalogue>> =
                 Pager(
                     config,
-                    pagingSourceFactory = { localDataSource.getAllMovies(SimpleSQLiteQuery(query)) }
+                    pagingSourceFactory = { localDataSource.getAllMovies() }
                 ).flow.map {
                     it.map { movieEntity -> DataMapper.mapMovieEntityToDomain(movieEntity) }
                 }
@@ -47,14 +47,14 @@ class FakeCatalogueRepository(
                 remoteDataSource.getAllMovies()
 
             override suspend fun saveCallResult(data: ListMovieResponse) {
-                val movieList = DataMapper.mapResListMovieToEntities(data.results)
+                val movieList = DataMapper.mapResListMovieToEntities(data.results, false)
                 localDataSource.insertMovies(movieList)
             }
         }.asFlow()
     }
 
     override fun getMovie(id: Int): Flow<Resource<Catalogue>> {
-        return object : monster.myapp.moviecatalogue.core.data.NetworkBoundResource<Catalogue, Catalogue>() {
+        return object : NetworkBoundResource<Catalogue, MovieResponse>() {
             override fun loadFromDB(): Flow<Catalogue> = localDataSource.getMovie(id).map {
                 DataMapper.mapMovieEntityToDomain(it)
             }
@@ -62,77 +62,130 @@ class FakeCatalogueRepository(
             override fun shouldFetch(data: Catalogue?): Boolean =
                 data == null
 
-            override suspend fun createCall(): Flow<ApiResponse<Catalogue>> =
+            override suspend fun createCall(): Flow<ApiResponse<MovieResponse>> =
                 remoteDataSource.getMovie(id)
 
-            override suspend fun saveCallResult(data: Catalogue) {
+            override suspend fun saveCallResult(data: MovieResponse) {
                 localDataSource.updateMovie(DataMapper.mapResMovieToEntity(data))
             }
         }.asFlow()
     }
 
-    override fun getAllTvShows(
-        isRefresh: Boolean, query: String
-    ): Flow<Resource<PagingData<TvShow>>> {
-        return object :
-            monster.myapp.moviecatalogue.core.data.NetworkBoundResource<PagingData<TvShow>, ListTvShowResponse>() {
-            public override fun loadFromDB(): Flow<PagingData<TvShow>> =
+    override fun getSearchMovies(query: String): Flow<Resource<PagingData<Catalogue>>> {
+        return object : NetworkBoundResource<PagingData<Catalogue>, ListMovieResponse>() {
+            public override fun loadFromDB(): Flow<PagingData<Catalogue>> =
                 Pager(
                     config,
-                    pagingSourceFactory = { localDataSource.getAllTvShows(SimpleSQLiteQuery(query)) }
+                    pagingSourceFactory = {
+                        localDataSource.getSearchMovies(
+                            SimpleSQLiteQuery("SELECT * FROM movie_entities WHERE title LIKE '%$query%'")
+                        )
+                    }
+                ).flow.map {
+                    it.map { movieEntity -> DataMapper.mapMovieEntityToDomain(movieEntity) }
+                }
+
+            override fun shouldFetch(data: PagingData<Catalogue>?): Boolean = true
+
+            override suspend fun createCall(): Flow<ApiResponse<ListMovieResponse>> =
+                remoteDataSource.getSearchMovie(query)
+
+            override suspend fun saveCallResult(data: ListMovieResponse) {
+                val movieList = DataMapper.mapResListMovieToEntities(data.results, true)
+                localDataSource.insertMovies(movieList)
+            }
+        }.asFlow()
+    }
+
+    override fun getAllTvShows(isRefresh: Boolean): Flow<Resource<PagingData<Catalogue>>> {
+        return object : NetworkBoundResource<PagingData<Catalogue>, ListTvShowResponse>() {
+            public override fun loadFromDB(): Flow<PagingData<Catalogue>> =
+                Pager(
+                    config,
+                    pagingSourceFactory = { localDataSource.getAllTvShows() }
                 ).flow.map {
                     it.map { tvShowEntity -> DataMapper.mapTvShowEntityToDomain(tvShowEntity) }
                 }
 
-            override fun shouldFetch(data: PagingData<TvShow>?): Boolean = isRefresh
+            override fun shouldFetch(data: PagingData<Catalogue>?): Boolean = isRefresh
 
             override suspend fun createCall(): Flow<ApiResponse<ListTvShowResponse>> =
                 remoteDataSource.getAllTvShows()
 
             override suspend fun saveCallResult(data: ListTvShowResponse) {
-                val tvShowList = DataMapper.mapResListTvShowToEntities(data.results)
+                val tvShowList = DataMapper.mapResListTvShowToEntities(data.results, false)
                 localDataSource.insertTvShows(tvShowList)
             }
         }.asFlow()
     }
 
-    override fun getTvShow(id: Int): Flow<Resource<TvShow>> {
-        return object : monster.myapp.moviecatalogue.core.data.NetworkBoundResource<TvShow, TvShow>() {
-            override fun loadFromDB(): Flow<TvShow> = localDataSource.getTvShow(id).map {
+    override fun getTvShow(id: Int): Flow<Resource<Catalogue>> {
+        return object : NetworkBoundResource<Catalogue, TvShowResponse>() {
+            override fun loadFromDB(): Flow<Catalogue> = localDataSource.getTvShow(id).map {
                 DataMapper.mapTvShowEntityToDomain(it)
             }
 
-            override fun shouldFetch(data: TvShow?): Boolean =
+            override fun shouldFetch(data: Catalogue?): Boolean =
                 data == null
 
-            override suspend fun createCall(): Flow<ApiResponse<TvShow>> =
+            override suspend fun createCall(): Flow<ApiResponse<TvShowResponse>> =
                 remoteDataSource.getTvShow(id)
 
-            override suspend fun saveCallResult(data: TvShow) {
+            override suspend fun saveCallResult(data: TvShowResponse) {
                 localDataSource.updateTvShow(DataMapper.mapResTvShowToEntity(data))
             }
         }.asFlow()
     }
 
+    override fun getSearchTvShows(query: String): Flow<Resource<PagingData<Catalogue>>> {
+        return object : NetworkBoundResource<PagingData<Catalogue>, ListTvShowResponse>() {
+            public override fun loadFromDB(): Flow<PagingData<Catalogue>> =
+                Pager(
+                    config,
+                    pagingSourceFactory = {
+                        localDataSource.getSearchTvShows(
+                            SimpleSQLiteQuery("SELECT * FROM tv_entities WHERE name LIKE '%$query%'")
+                        )
+                    }
+                ).flow.map {
+                    it.map { tvShowEntity -> DataMapper.mapTvShowEntityToDomain(tvShowEntity) }
+                }
+
+            override fun shouldFetch(data: PagingData<Catalogue>?): Boolean = true
+
+            override suspend fun createCall(): Flow<ApiResponse<ListTvShowResponse>> =
+                remoteDataSource.getSearchTvShow(query)
+
+            override suspend fun saveCallResult(data: ListTvShowResponse) {
+                val tvShowList = DataMapper.mapResListTvShowToEntities(data.results, true)
+                localDataSource.insertTvShows(tvShowList)
+            }
+        }.asFlow()
+    }
+
     override fun getFavoredMovies(): Flow<PagingData<Catalogue>> =
-        Pager(config, pagingSourceFactory = { localDataSource.getFavoredMovies() }).flow.map {
+        Pager(
+            config,
+            pagingSourceFactory = { localDataSource.getFavoredMovies() }).flow.map {
             it.map { movieEntity -> DataMapper.mapMovieEntityToDomain(movieEntity) }
         }
 
-    override fun getFavoredTvShows(): Flow<PagingData<TvShow>> =
-        Pager(config, pagingSourceFactory = { localDataSource.getFavoredTvShows() }).flow.map {
+    override fun getFavoredTvShows(): Flow<PagingData<Catalogue>> =
+        Pager(
+            config,
+            pagingSourceFactory = { localDataSource.getFavoredTvShows() }).flow.map {
             it.map { tvShowEntity -> DataMapper.mapTvShowEntityToDomain(tvShowEntity) }
         }
 
     override fun setFavoredMovie(catalogue: Catalogue, state: Boolean) {
-        val movieEntity = DataMapper.mapResMovieToEntity(catalogue)
+        val movieEntity = DataMapper.mapMovieDomainToEntity(catalogue)
         appExecutors.diskIO().execute {
             localDataSource.setFavoredMovie(movieEntity, state)
         }
     }
 
-    override fun setFavoredTvShow(tvShow: TvShow, state: Boolean) {
-        val tvShowEntity = DataMapper.mapResTvShowToEntity(tvShow)
+    override fun setFavoredTvShow(catalogue: Catalogue, state: Boolean) {
+        val tvShowEntity = DataMapper.mapTvShowDomainToEntity(catalogue)
         appExecutors.diskIO().execute {
             localDataSource.setFavoredTvShow(tvShowEntity, state)
         }

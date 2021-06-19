@@ -50,8 +50,8 @@ class MovieViewModelTest {
             emit(data)
         }
 
-        `when`(catalogueRepository.getAllMovies(false, query)).thenReturn(movies)
-        verify(catalogueRepository).getAllMovies(false, query)
+        `when`(catalogueRepository.getAllMovies(false)).thenReturn(movies)
+        verify(catalogueRepository).getAllMovies(false)
         verifyNoMoreInteractions(catalogueRepository)
         Assert.assertEquals(data.data, dummyMovies)
     }
