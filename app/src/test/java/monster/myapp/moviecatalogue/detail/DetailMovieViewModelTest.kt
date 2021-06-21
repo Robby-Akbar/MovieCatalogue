@@ -1,19 +1,7 @@
 package monster.myapp.moviecatalogue.detail
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import monster.myapp.moviecatalogue.core.data.CatalogueRepository
-import monster.myapp.moviecatalogue.core.data.source.local.entity.MovieEntity
-import monster.myapp.moviecatalogue.core.data.source.local.entity.TvShowEntity
-import monster.myapp.moviecatalogue.core.utils.DataDummy
-import monster.myapp.moviecatalogue.core.data.Resource
-import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
 
 /**

@@ -1,24 +1,14 @@
 package monster.myapp.moviecatalogue.catalogue
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.paging.PagingData
-import monster.myapp.moviecatalogue.core.data.CatalogueRepository
-import monster.myapp.moviecatalogue.core.data.source.local.entity.TvShowEntity
-import monster.myapp.moviecatalogue.core.utils.DataDummy
-import monster.myapp.moviecatalogue.core.data.Resource
 import monster.myapp.moviecatalogue.core.domain.repository.ICatalogueRepository
 import monster.myapp.moviecatalogue.core.domain.usecase.CatalogueInteractor
 import monster.myapp.moviecatalogue.core.domain.usecase.CatalogueUseCase
-import org.junit.Assert.*
 import org.junit.Test
 import org.junit.Before
 import org.junit.Rule
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
@@ -28,7 +18,6 @@ import org.mockito.junit.MockitoJUnitRunner
 class TvShowViewModelTest {
 
     private lateinit var catalogueUseCase: CatalogueUseCase
-    private val query = "SELECT * FROM tv_entities"
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()

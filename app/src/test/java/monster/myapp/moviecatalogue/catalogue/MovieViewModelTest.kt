@@ -1,25 +1,14 @@
 package monster.myapp.moviecatalogue.catalogue
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
-import androidx.paging.PagingData
-import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
-import kotlinx.coroutines.flow.flow
-import monster.myapp.moviecatalogue.core.data.source.local.entity.MovieEntity
-import monster.myapp.moviecatalogue.core.utils.DataDummy
-import monster.myapp.moviecatalogue.core.data.Resource
 import monster.myapp.moviecatalogue.core.domain.repository.ICatalogueRepository
 import monster.myapp.moviecatalogue.core.domain.usecase.CatalogueInteractor
 import monster.myapp.moviecatalogue.core.domain.usecase.CatalogueUseCase
-import org.junit.Assert
-import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
@@ -29,7 +18,6 @@ import org.mockito.junit.MockitoJUnitRunner
 class MovieViewModelTest {
 
     private lateinit var catalogueUseCase: CatalogueUseCase
-    private val query = "SELECT * FROM movie_entities"
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
