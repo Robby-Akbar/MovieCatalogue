@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Katalog Film</string>
+    <string name="title_movie">Film</string>
+    <string name="title_tv_show">Acara TV</string>
+    <string name="title_favorite">Daftar Favorit</string>
+
+    <string name="expandedImageContentDescription">Gambar Latar Belakang</string>
+    <string name="detail_movie">Detail Film</string>
+    <string name="text_share">Bagikan aplikasi ini sekarang.</string>
+    <string name="share_text">Lihat detail %s di aplikasi Katalog Film.</string>
+
+    <string name="splash_description">Layar Percikan</string>
+    <string name="txt_favored">Disukai</string>
+    <string name="no_favorites">Tidak ada Favorit</string>
+    <string name="txt_connection">Tidak ada koneksi internet</string>
+    <string name="no_connection">Upss! Ada yang salah…</string>
+
+    <string name="msg_first">Sudah di awal</string>
+    <string name="msg_last">Sudah di akhir</string>
+    <string name="message_undo">Batalkan menghapus item sebelumnya?</string>
+    <string name="message_ok">Oke</string>
+    <string name="search">Cari</string>
+    <string name="search_hint">Ketik Judul</string>
+    <string name="data_not_found">Data tidak ditemukan!</string>
+    <string name="change_settings">Pengaturan aplikasi</string>
+
+    <string name="reminder_title">Ingatkan pada pukul 09.00</string>
+    <string name="reminder_key">Reminder</string>
+    <string name="language_title">Pilih Bahasa</string>
+    <string name="language_key">Language</string>
+    <string name="alarm_set_message">Pengingat pada jam 9:00 WIB berhasil diatur</string>
+    <string name="alarm_canceled_message">Pengingat pada jam 9:00 WIB telah dibatalkan</string>
+    <string name="txt_message">Ayo! cek film terbaru saat ini.</string>
+</resources>

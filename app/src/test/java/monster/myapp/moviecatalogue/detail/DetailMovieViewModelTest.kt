@@ -58,11 +58,11 @@ class DetailMovieViewModelTest {
 
         viewModel.movieEntity.observeForever(observerMovieEntity)
         verify(observerMovieEntity).onChanged(resource)
-    }
+    }*/
 
     @Test
     fun getTvShow() {
-        val tvShow = MutableLiveData<Resource<TvShowEntity>>()
+        /*val tvShow = MutableLiveData<Resource<TvShowEntity>>()
         val resource = Resource.success(dummyTvShow)
         tvShow.value = resource
         viewModel.setSelectedCatalogue(tvShowId)
@@ -70,6 +70,6 @@ class DetailMovieViewModelTest {
         `when`(catalogueRepository.getTvShow(tvShowId)).thenReturn(tvShow)
 
         viewModel.tvShow.observeForever(observerTv)
-        verify(observerTv).onChanged(resource)
-    }*/
+        verify(observerTv).onChanged(resource)*/
+    }
 }

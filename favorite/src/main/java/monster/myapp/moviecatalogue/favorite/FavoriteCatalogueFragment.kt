@@ -18,14 +18,14 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import monster.myapp.moviecatalogue.R
 import monster.myapp.moviecatalogue.catalogue.CatalogueViewModel
-import monster.myapp.moviecatalogue.databinding.FragmentFavoriteBinding
 import monster.myapp.moviecatalogue.core.ui.CatalogueAdapter
 import monster.myapp.moviecatalogue.core.domain.model.Catalogue
 import monster.myapp.moviecatalogue.core.ui.ItemCatalogueCallback
 import monster.myapp.moviecatalogue.detail.DetailCatalogueActivity
+import monster.myapp.moviecatalogue.favorite.databinding.FragmentFavoriteBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FavoriteCatalogueFragment(private val type: String) : Fragment(), ItemCatalogueCallback {
+class FavoriteCatalogueFragment : Fragment(), ItemCatalogueCallback {
 
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding
@@ -33,6 +33,7 @@ class FavoriteCatalogueFragment(private val type: String) : Fragment(), ItemCata
 
     private val catalogueViewModel: CatalogueViewModel by viewModel()
     private lateinit var catalogueAdapter: CatalogueAdapter
+    private lateinit var type: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +49,7 @@ class FavoriteCatalogueFragment(private val type: String) : Fragment(), ItemCata
         super.onViewCreated(view, savedInstanceState)
         itemTouchHelper.attachToRecyclerView(binding?.recyclerview)
 
+        type = arguments?.getString(DetailCatalogueActivity.EXTRA_TYPE).toString()
         if (activity != null) {
             catalogueAdapter = CatalogueAdapter(this)
             binding?.let {
@@ -128,7 +130,14 @@ class FavoriteCatalogueFragment(private val type: String) : Fragment(), ItemCata
     private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
         override fun getMovementFlags(
             recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder
-        ): Int = makeMovementFlags(0, ItemTouchHelper.RIGHT)
+        ): Int {
+            val position = when (type) {
+                "movie" -> ItemTouchHelper.RIGHT
+                "tvshow" -> ItemTouchHelper.LEFT
+                else -> 0
+            }
+            return makeMovementFlags(0, position)
+        }
 
         override fun onMove(
             recyclerView: RecyclerView,
@@ -156,5 +165,14 @@ class FavoriteCatalogueFragment(private val type: String) : Fragment(), ItemCata
             }
         }
     })
+
+    companion object {
+        private const val EXTRA_TYPE = "extra_type"
+        fun newInstance(type: String) = FavoriteCatalogueFragment().apply {
+            arguments = Bundle().apply {
+                putString(EXTRA_TYPE, type)
+            }
+        }
+    }
 
 }

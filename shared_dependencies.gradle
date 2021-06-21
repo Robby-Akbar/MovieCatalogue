@@ -17,6 +17,8 @@ dependencies {
     implementation "io.insert-koin:koin-core:$koinVersion"
     implementation "io.insert-koin:koin-android:$koinVersion"
 
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
+
     //testing
     implementation "androidx.test.espresso:espresso-idling-resource:$idleResourceVersion"
     testImplementation "org.mockito:mockito-core:$mockitoVersion"

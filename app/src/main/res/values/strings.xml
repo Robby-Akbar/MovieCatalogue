@@ -23,4 +23,12 @@
     <string name="search_hint">Type a Title</string>
     <string name="data_not_found">Item not Found!</string>
     <string name="change_settings">App Settings</string>
+
+    <string name="reminder_title">Reminder at 9:00 AM</string>
+    <string name="reminder_key">Reminder</string>
+    <string name="language_title">Select Language</string>
+    <string name="language_key">Language</string>
+    <string name="alarm_set_message">Reminder at 9:00 AM set up</string>
+    <string name="alarm_canceled_message">Reminder at 9:00 AM has canceled</string>
+    <string name="txt_message">Come on! check the latest movies today.</string>
 </resources>

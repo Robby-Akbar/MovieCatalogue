@@ -5,8 +5,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import monster.myapp.moviecatalogue.databinding.ActivityFavoriteBinding
 import monster.myapp.moviecatalogue.favorite.SectionsPagerAdapter.Companion.TAB_TITLES
+import monster.myapp.moviecatalogue.favorite.databinding.ActivityFavoriteBinding
 
 class FavoriteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

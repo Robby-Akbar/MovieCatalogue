@@ -1,12 +1,11 @@
 package monster.myapp.moviecatalogue.core.data.source.remote.response
 
+import com.google.gson.annotations.SerializedName
+
 /**
  * Created by robby on 07/05/21.
  */
 data class ListTvShowResponse(
-    val page: Int,
-    val results: List<TvShowResponse>,
-    val total_pages: Int,
-    val total_results: Int,
-    val status_message: String
+    @field:SerializedName("results")
+    val results: List<TvShowResponse>
 )

@@ -8,6 +8,9 @@ import monster.myapp.moviecatalogue.core.data.CatalogueRepository
 import monster.myapp.moviecatalogue.core.data.source.local.entity.TvShowEntity
 import monster.myapp.moviecatalogue.core.utils.DataDummy
 import monster.myapp.moviecatalogue.core.data.Resource
+import monster.myapp.moviecatalogue.core.domain.repository.ICatalogueRepository
+import monster.myapp.moviecatalogue.core.domain.usecase.CatalogueInteractor
+import monster.myapp.moviecatalogue.core.domain.usecase.CatalogueUseCase
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.Before
@@ -24,29 +27,23 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class TvShowViewModelTest {
 
-    //private lateinit var viewModel: TvShowViewModel
+    private lateinit var catalogueUseCase: CatalogueUseCase
     private val query = "SELECT * FROM tv_entities"
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var catalogueRepository: CatalogueRepository
+    private lateinit var catalogueRepository: ICatalogueRepository
 
-    @Mock
-    private lateinit var observer: Observer<Resource<PagingData<TvShowEntity>>>
-
-    @Mock
-    private lateinit var favoredObserver: Observer<PagingData<TvShowEntity>>
-
-    /*@Before
+    @Before
     fun setUp() {
-        viewModel = TvShowViewModel(catalogueRepository)
+        catalogueUseCase = CatalogueInteractor(catalogueRepository)
     }
 
     @Test
     fun getTvSHows() {
-        val dummyTvShows = DataDummy.generateDummyTvShows()
+        /*val dummyTvShows = DataDummy.generateDummyTvShows()
         val data = Resource.success(PagingData.from(dummyTvShows))
         val tvShows = MutableLiveData<Resource<PagingData<TvShowEntity>>>()
         tvShows.value = data
@@ -54,10 +51,10 @@ class TvShowViewModelTest {
         `when`(catalogueRepository.getAllTvShows(false, query)).thenReturn(tvShows)
 
         viewModel.tvShows.observeForever(observer)
-        verify(observer).onChanged(data)
+        verify(observer).onChanged(data)*/
     }
 
-    @Test
+    /*@Test
     fun getFavoredTvShows() {
         val dummyTvShows = DataDummy.generateDummyTvShows()
         val data = PagingData.from(dummyTvShows)

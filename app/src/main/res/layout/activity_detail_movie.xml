@@ -57,55 +57,69 @@
             android:layout_marginBottom="4dp"
             app:cardCornerRadius="4dp">
 
-            <RelativeLayout
+            <com.skydoves.androidveil.VeilLayout
+                android:id="@+id/veilLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp">
+                app:veilLayout_baseAlpha="0.6"
+                app:veilLayout_dropOff="0.5"
+                app:veilLayout_highlightAlpha="1.0"
+                app:veilLayout_radius="6dp"
+                app:veilLayout_shimmerEnable="true"
+                app:veilLayout_veiled="true">
 
-                <TextView
-                    android:id="@+id/tv_detail"
-                    style="@style/MyTextView"
-                    android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@id/tv_item_popularity"
-                    android:text="@string/detail_movie"
-                    android:textColor="@color/navy_700"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tv_item_popularity"
-                    style="@style/MyTextView"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="16dp"
-                    android:gravity="center_vertical"
-                    app:drawableStartCompat="@drawable/ic_star"
-                    app:drawableTint="@android:color/holo_orange_light"
-                    tools:text="4.8" />
-
-                <View
-                    android:id="@+id/line"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@+id/tv_detail"
-                    android:layout_marginTop="8dp"
-                    android:background="?android:attr/listDivider" />
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp">
 
-                <TextView
-                    android:id="@+id/tv_item_release"
-                    style="@style/MyTextView.Item"
-                    android:layout_below="@id/line"
-                    app:drawableStartCompat="@drawable/ic_date"
-                    tools:text="Wednesday, Mei 05, 2021" />
+                    <TextView
+                        android:id="@+id/tv_detail"
+                        style="@style/MyTextView"
+                        android:layout_alignParentStart="true"
+                        android:layout_toStartOf="@id/tv_item_popularity"
+                        android:text="@string/detail_movie"
+                        android:textColor="@color/navy_700"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_item_overview"
-                    style="@style/MyTextView.Item"
-                    android:layout_below="@id/tv_item_release"
-                    tools:text="Washed-up MMA fighter Cole Young, unaware of his heritage, and hunted by Emperor Shang Tsung's best warrior, Sub-Zero, seeks out and trains with Earth's greatest champions as he prepares to stand against the enemies of Outworld in a high stakes battle for the universe." />
+                    <TextView
+                        android:id="@+id/tv_item_popularity"
+                        style="@style/MyTextView"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="16dp"
+                        android:gravity="center_vertical"
+                        app:drawableStartCompat="@drawable/ic_star"
+                        app:drawableTint="@android:color/holo_orange_light"
+                        tools:text="4.8" />
 
-            </RelativeLayout>
+                    <View
+                        android:id="@+id/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/tv_detail"
+                        android:layout_marginTop="8dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <TextView
+                        android:id="@+id/tv_item_release"
+                        style="@style/MyTextView.Item"
+                        android:layout_below="@id/line"
+                        app:drawableStartCompat="@drawable/ic_date"
+                        tools:text="Wednesday, Mei 05, 2021" />
+
+                    <TextView
+                        android:id="@+id/tv_item_overview"
+                        style="@style/MyTextView.Item"
+                        android:layout_below="@id/tv_item_release"
+                        tools:text="Washed-up MMA fighter Cole Young, unaware of his heritage, and hunted by Emperor Shang Tsung's best warrior, Sub-Zero, seeks out and trains with Earth's greatest champions as he prepares to stand against the enemies of Outworld in a high stakes battle for the universe." />
+
+                </RelativeLayout>
+
+            </com.skydoves.androidveil.VeilLayout>
+
         </androidx.cardview.widget.CardView>
 
     </androidx.core.widget.NestedScrollView>

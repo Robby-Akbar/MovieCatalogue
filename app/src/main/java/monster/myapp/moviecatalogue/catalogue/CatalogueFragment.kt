@@ -36,7 +36,7 @@ class CatalogueFragment : Fragment(), ItemCatalogueCallback {
     private lateinit var type: String
 
     private val catalogueViewModel: CatalogueViewModel by viewModel()
-    private var initial = true
+    private var search = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,10 +125,10 @@ class CatalogueFragment : Fragment(), ItemCatalogueCallback {
 
             catalogueAdapter.addLoadStateListener { loadState ->
                 if (loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && catalogueAdapter.itemCount < 1) {
-                    if (initial) {
-                        catalogueViewModel.isRefresh.value = true
-                    } else {
+                    if (search) {
                         whenNoData()
+                    } else {
+                        catalogueViewModel.isRefresh.value = true
                     }
                 } else {
                     binding?.apply {
@@ -161,6 +161,12 @@ class CatalogueFragment : Fragment(), ItemCatalogueCallback {
 
     private fun whenError() {
         binding?.apply {
+            imgPlaceholder.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireActivity(),
+                    R.drawable.img_no_connection
+                )
+            )
             progressBar.visibility = View.GONE
             swipeRefreshLayout.isRefreshing = false
             imgPlaceholder.visibility = View.VISIBLE
@@ -195,8 +201,8 @@ class CatalogueFragment : Fragment(), ItemCatalogueCallback {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                initial = false
                 catalogueViewModel.query.value = newText
+                search = newText.isNotEmpty()
                 return true
             }
         })
@@ -216,6 +222,7 @@ class CatalogueFragment : Fragment(), ItemCatalogueCallback {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding?.recyclerview?.adapter = null
         _binding = null
     }
 

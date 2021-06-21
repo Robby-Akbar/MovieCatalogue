@@ -20,8 +20,8 @@ class SectionsPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAd
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> FavoriteCatalogueFragment("movie")
-            1 -> FavoriteCatalogueFragment("tvshow")
+            0 -> FavoriteCatalogueFragment.newInstance("movie")
+            1 -> FavoriteCatalogueFragment.newInstance("tvshow")
             else -> Fragment()
         }
     }

@@ -31,6 +31,7 @@
     </style>
 
     <style name="Theme.MovieCatalogue.Splash" parent="Theme.MovieCatalogue.NoActionBar">
+        <item name="android:background">@color/navy_500</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationStyle</item>
     </style>

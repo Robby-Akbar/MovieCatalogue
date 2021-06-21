@@ -4,6 +4,14 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
     id 'androidx.navigation.safeargs'
+    id 'com.squareup.leakcanary.deobfuscation'
+}
+
+leakCanary {
+    // LeakCanary needs to know which variants have obfuscation turned on
+    filterObfuscatedVariants { variant ->
+        variant.name == "debug"
+    }
 }
 
 apply from: '../shared_dependencies.gradle'
@@ -25,8 +33,12 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles 'proguard-rules.pro'
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     buildTypes.each {
@@ -51,12 +63,6 @@ android {
 repositories {
     google()
     mavenCentral()
-    //noinspection JcenterRepositoryObsolete
-    jcenter() {
-        content {
-            includeModule("com.faltenreich", "skeletonlayout")
-        }
-    }
 }
 
 dependencies {
@@ -69,14 +75,14 @@ dependencies {
 
     //ui
     implementation "de.hdodenhof:circleimageview:$circleImgVersion"
-    implementation "com.faltenreich:skeletonlayout:$skeletonVersion"
+    implementation "com.github.skydoves:androidveil:1.1.1"
+    implementation 'androidx.preference:preference-ktx:1.1.1'
 
     //navigation
     implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
-    androidTestImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
     androidTestImplementation "androidx.test:runner:$androidTestVersion"

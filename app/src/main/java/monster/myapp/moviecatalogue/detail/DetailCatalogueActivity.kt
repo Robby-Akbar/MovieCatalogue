@@ -14,8 +14,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
-import com.faltenreich.skeletonlayout.Skeleton
-import com.faltenreich.skeletonlayout.createSkeleton
+import com.skydoves.androidveil.VeilLayout
 import monster.myapp.moviecatalogue.BuildConfig
 import monster.myapp.moviecatalogue.R
 import monster.myapp.moviecatalogue.core.data.Resource
@@ -32,7 +31,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
     private lateinit var catalogue: Catalogue
 
     private val detailCatalogueViewModel: DetailCatalogueViewModel by viewModel()
-    private lateinit var skeletonDetail: Skeleton
+    private lateinit var veilLayout: VeilLayout
     private var menu: Menu? = null
 
     private lateinit var detector: GestureDetectorCompat
@@ -57,14 +56,14 @@ class DetailCatalogueActivity : AppCompatActivity() {
             detailCatalogueViewModel.setSelectedCatalogue(id)
         }
 
-        skeletonDetail = binding.cardDetail.createSkeleton()
+        veilLayout = binding.veilLayout
         if (type == "movie") {
             detailCatalogueViewModel.movie.observe(this, { movie ->
                 if (movie != null) {
                     when (movie) {
-                        is Resource.Loading -> skeletonDetail.showSkeleton()
+                        is Resource.Loading -> veilLayout.veil()
                         is Resource.Success -> if (movie.data != null) {
-                            skeletonDetail.showOriginal()
+                            veilLayout.unVeil()
                             movie.data?.let {
                                 this.catalogue = it
                             }
@@ -72,7 +71,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
                             setSwipeNextPrevState()
                         }
                         is Resource.Error -> {
-                            skeletonDetail.showOriginal()
+                            veilLayout.unVeil()
                             Toast.makeText(this, movie.message, Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -82,9 +81,9 @@ class DetailCatalogueActivity : AppCompatActivity() {
             detailCatalogueViewModel.tvShow.observe(this, { tvshow ->
                 if (tvshow != null) {
                     when (tvshow) {
-                        is Resource.Loading -> skeletonDetail.showSkeleton()
+                        is Resource.Loading -> veilLayout.veil()
                         is Resource.Success -> if (tvshow.data != null) {
-                            skeletonDetail.showOriginal()
+                            veilLayout.unVeil()
                             tvshow.data?.let {
                                 this.catalogue = it
                             }
@@ -92,7 +91,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
                             setSwipeNextPrevState()
                         }
                         is Resource.Error -> {
-                            skeletonDetail.showOriginal()
+                            veilLayout.unVeil()
                             Toast.makeText(this, tvshow.message, Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -135,15 +134,15 @@ class DetailCatalogueActivity : AppCompatActivity() {
             detailCatalogueViewModel.movie.observe(this, { movie ->
                 if (movie != null) {
                     when (movie) {
-                        is Resource.Loading -> skeletonDetail.showSkeleton()
+                        is Resource.Loading -> veilLayout.veil()
                         is Resource.Success -> if (movie.data != null) {
-                            skeletonDetail.showOriginal()
+                            veilLayout.unVeil()
                             movie.data?.favored?.let {
                                 setFavoriteState(it)
                             }
                         }
                         is Resource.Error -> {
-                            skeletonDetail.showOriginal()
+                            veilLayout.unVeil()
                             Toast.makeText(this, movie.message, Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -153,15 +152,15 @@ class DetailCatalogueActivity : AppCompatActivity() {
             detailCatalogueViewModel.tvShow.observe(this, { tvShow ->
                 if (tvShow != null) {
                     when (tvShow) {
-                        is Resource.Loading -> skeletonDetail.showSkeleton()
+                        is Resource.Loading -> veilLayout.veil()
                         is Resource.Success -> if (tvShow.data != null) {
-                            skeletonDetail.showOriginal()
+                            veilLayout.unVeil()
                             tvShow.data?.favored?.let {
                                 setFavoriteState(it)
                             }
                         }
                         is Resource.Error -> {
-                            skeletonDetail.showOriginal()
+                            veilLayout.unVeil()
                             Toast.makeText(this, tvShow.message, Toast.LENGTH_SHORT).show()
                         }
                     }
