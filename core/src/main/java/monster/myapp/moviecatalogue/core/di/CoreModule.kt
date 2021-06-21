@@ -55,7 +55,7 @@ val networkModule = module {
             .writeTimeout(30, TimeUnit.MINUTES) // write timeout
             .readTimeout(30, TimeUnit.MINUTES)
             .callTimeout(2, TimeUnit.MINUTES) // read timeout
-            //.certificatePinner(certificatePinner)
+            .certificatePinner(certificatePinner)
             .build()
     }
     single {
