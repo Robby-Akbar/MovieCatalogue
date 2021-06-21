@@ -1,3 +1,2 @@
 # MovieCatalogue
-Dicoding Submission
-[![Robby-Akbar](https://circleci.com/gh/Robby-Akbar/MovieCatalogue.svg?style=svg)](https://circleci.com/gh/Robby-Akbar/MovieCatalogue)
+[![Robby-Akbar](https://circleci.com/gh/Robby-Akbar/MovieCatalogue.svg?style=shield)](https://circleci.com/gh/Robby-Akbar/MovieCatalogue)
