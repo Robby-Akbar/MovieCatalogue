@@ -22,7 +22,9 @@
         dist:title="@string/title_favorite"
         tools:ignore="ManifestResource">
         <dist:delivery>
-            <dist:install-time />
+            <dist:install-time>
+                <dist:removable dist:value="true" />
+            </dist:install-time>
         </dist:delivery>
         <dist:fusing dist:include="true" />
     </dist:module>
