@@ -133,9 +133,9 @@ class CatalogueRepositoryTest {
     @Test
     fun setFavoredMovie() {
         val dataFavorite = dummyMovies[1].copy(favored = true)
-        doNothing().`when`(local).setFavoredMovie(DataMapper.mapMovieDomainToEntity(dataFavorite, false), true)
+        doNothing().`when`(local).setFavoredMovie(DataMapper.mapMovieDomainToEntity(dataFavorite), true)
         catalogueRepository.setFavoredMovie(dataFavorite, true)
-        verify(local, times(1)).setFavoredMovie(DataMapper.mapMovieDomainToEntity(dataFavorite, false), true)
+        verify(local, times(1)).setFavoredMovie(DataMapper.mapMovieDomainToEntity(dataFavorite), true)
     }
 
     @Test
